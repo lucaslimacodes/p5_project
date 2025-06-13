@@ -8,10 +8,10 @@ const MUD = 5
 const WATER = 10
 
 // tiles probability to exist
-const OBST_PROB = 0.2
-const SAND_PROB = 0.25
-const MUD_PROB = 0.3
-const WATER_PROB = 0.25
+const OBST_PROB = 0.05
+const SAND_PROB = 0.4
+const MUD_PROB = 0.05
+const WATER_PROB = 0.5
 
 // agent and food enumerators
 const AGENT = -1
@@ -50,8 +50,12 @@ class World{
         }
 
         // loading image of both agent and food
-        this.foodImage = loadImage("https://static.vecteezy.com/system/resources/previews/019/607/567/non_2x/fast-food-vector-clipart-design-graphic-clipart-design-free-png.png")
-        this.agentImage = loadImage("https://png.pngtree.com/png-clipart/20240927/original/pngtree-small-artificial-intelligence-assistant-robot-on-transparent-background-png-image_16100316.png")
+        this.foodImage = loadImage("./assets/trigo.png")
+        this.agentImage = loadImage("./assets/cow.png")
+        this.sandImage = loadImage("./assets/sandImage.jpg")
+        this.waterImage = loadImage("./assets/waterImage.jpg")
+        this.stoneImage = loadImage("./assets/stoneImage.png")
+        this.dirtImage = loadImage("./assets/dirtImage.webp")
 
 
     }
@@ -108,18 +112,17 @@ class World{
         for(let x=0;x<this.nX;x++){
             for(let y=0;y<this.nY;y++){
                 if(this.tiles[x][y] == SAND){
-                    fill(194, 178, 128);
+                    image(this.sandImage, x*this.gridSize, y*this.gridSize, this.gridSize,this.gridSize)
                 }
                 else if(this.tiles[x][y] == WATER){
-                    fill(173, 216, 230)
+                    image(this.waterImage, x*this.gridSize, y*this.gridSize, this.gridSize,this.gridSize)
                 }
                 else if(this.tiles[x][y] == OBSTACLE){
-                    fill(128);
+                    image(this.stoneImage, x*this.gridSize, y*this.gridSize, this.gridSize,this.gridSize)
                 }
                 else if(this.tiles[x][y] == MUD){
-                    fill(96, 64, 40)
+                    image(this.dirtImage, x*this.gridSize, y*this.gridSize, this.gridSize,this.gridSize)
                 }
-                square(x*this.gridSize,y*this.gridSize,this.gridSize)
             }
         }
     }

@@ -1,7 +1,7 @@
 
 let world
-const WIDTH = 800
-const HEIGHT = 400
+const WIDTH = 1440
+const HEIGHT = 720
 const GRID_SIZE = 40
 
 function setup() {
