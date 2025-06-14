@@ -8,10 +8,10 @@ const MUD = 5
 const WATER = 10
 
 // tiles probability to exist
-const OBST_PROB = 0.05
-const SAND_PROB = 0.4
-const MUD_PROB = 0.05
-const WATER_PROB = 0.5
+const OBST_PROB = 0.25
+const SAND_PROB = 0.25
+const MUD_PROB = 0.25
+const WATER_PROB = 0.25
 
 // agent and food enumerators
 const AGENT = -1
@@ -57,12 +57,15 @@ class World{
         this.stoneImage = loadImage("./assets/stoneImage.png")
         this.dirtImage = loadImage("./assets/dirtImage.webp")
 
+        // arrays to draw the frontier and the explored tiles
+        this.frontier = []
+        this.explored = []
+
 
     }
 
     getRandomTilesConfiguration(){
         let tiles = new Array(this.nX).fill(null).map(() => new Array(this.nY).fill(null)); // start an empty nY x nX matrix
-
         // create intervals between (0,1) based on the probability of each tile
         let obstRange = [0,OBST_PROB]
         let sandRange = [obstRange[1],obstRange[1]+SAND_PROB]
@@ -70,7 +73,7 @@ class World{
         let waterRange = [mudRange[1],1]
 
         for(let x=0;x<this.nX;x++){
-            for(let y=0;y<this.nX;y++){
+            for(let y=0;y<this.nY;y++){
                 let v = random(0,1)
                 if(v>=obstRange[0] && v<obstRange[1]){
                     tiles[x][y] = OBSTACLE
@@ -86,7 +89,6 @@ class World{
                 }
             }
         }
-
         return tiles
     }
 
@@ -94,6 +96,7 @@ class World{
         this.drawGrid()
         this.drawTiles()
         this.drawFoodAndAgent()
+        this.drawFrontierAndExplored()
     }
 
     drawGrid(){
@@ -130,6 +133,24 @@ class World{
     drawFoodAndAgent(){
         image(this.agentImage, this.agentPosition.x*this.gridSize, this.agentPosition.y*this.gridSize, this.gridSize,this.gridSize)
         image(this.foodImage, this.foodPosition.x*this.gridSize, this.foodPosition.y*this.gridSize, this.gridSize,this.gridSize)
+    }
+
+    drawFrontierAndExplored(){
+        for(let i=0;i<this.explored.length;i++){
+            fill(255,0,0,200)
+            noStroke()
+            square(this.explored[i].x*GRID_SIZE, this.explored[i].y*GRID_SIZE, GRID_SIZE)
+        }
+        for(let i=0;i<this.frontier.length;i++){
+            fill(0,255,0,200)
+            noStroke()
+            square(this.frontier[i].x*GRID_SIZE, this.frontier[i].y*GRID_SIZE, GRID_SIZE)
+        }
+    }
+
+    resetAlgorithmArrays(){
+        this.frontier = []
+        this.explored = []
     }
 
 
