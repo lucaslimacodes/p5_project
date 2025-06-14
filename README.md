@@ -3,7 +3,7 @@
 ```bash
 npm install
 ```
-- to run, just start a live server on your local project's folder. Then, access it through your browser.
+- to run, click with your RMB on index.html and select "Open with Live Server". Then, access it through your browser.
 - whenever you create a new class file, insert it in index.html body with a script tag
 
 
