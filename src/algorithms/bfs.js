@@ -29,6 +29,7 @@ class BFS extends Algorithm {
         for(let i=0;i<neighbors.length;i++){
             if(this.isPositionInFrontier(neighbors[i]) == false && this.wasPositionExplored(neighbors[i]) == false){
                 this.frontier.push(neighbors[i])
+                this.cameFrom[neighbors[i]] = state
             }
         }
     }

@@ -114,6 +114,12 @@ class World{
     drawTiles(){
         for(let x=0;x<this.nX;x++){
             for(let y=0;y<this.nY;y++){
+                // drawing the edges
+                noFill()
+                stroke(0)
+                strokeWeight(2)
+                square(x*this.gridSize, y*this.gridSize, this.gridSize)
+
                 if(this.tiles[x][y] == SAND){
                     image(this.sandImage, x*this.gridSize, y*this.gridSize, this.gridSize,this.gridSize)
                 }

@@ -22,6 +22,7 @@ function draw() {
     world.explored = bfs.explored
   }
   else{
+    console.log(bfs.getPath())
     world.resetAlgorithmArrays()
     bfs.reset()
   }

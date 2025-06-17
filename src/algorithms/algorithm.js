@@ -54,6 +54,22 @@ class Algorithm {
         return output
     }
 
+    // returns a list of p5.vector showing the path built from the start position to end position
+    getPath(){
+        // if the algorithm hasn't finished or failed, returns a empty list
+        if(this.status == FAILURE || this.status == INPROGRESS){
+            return []
+        }
+        let output = [this.endPosition]
+        let currPosition = this.cameFrom[this.endPosition]
+        while(!currPosition.equals(this.startPosition)){
+            output.unshift(currPosition)
+            currPosition = this.cameFrom[currPosition]
+        }
+        output.unshift(this.startPosition)
+        return output
+    }
+
     // checks if a p5.vector was explored
     wasPositionExplored(position){
         for(let i=0;i<this.explored.length;i++){
