@@ -44,8 +44,10 @@ class BFS extends Algorithm {
         return false
     }
 
-    reset(){
-        super.reset()
+    reset(startPosition, endPosition, grid){
+        super.reset(startPosition, endPosition, grid)
         this.frontier = [this.startPosition] 
     }
+
+
 }

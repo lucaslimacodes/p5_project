@@ -86,11 +86,17 @@ class Algorithm {
     }
 
     // has to be called by inherited classes' reset method
-    reset(){
+    reset(startPosition, endPosition, grid){
+        this.startPosition = startPosition
+        this.endPosition = endPosition
+        this.grid = grid
         this.explored = []
         this.status = INPROGRESS
         this.cameFrom.clear()
     }
+
+
+
 
 
 

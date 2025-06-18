@@ -19,6 +19,12 @@ const FOOD = -2
 
 // ------------- world constants ----------
 
+
+// frame delay when going through all types of terrain
+const SAND_TIME_FRAMES = 10
+const MUD_TIME_FRAMES = 20
+const WATER_TIME_FRAMES = 30
+
 class World{
     constructor(width,height,gridSize){
         this.width = width
@@ -61,6 +67,13 @@ class World{
         this.frontier = []
         this.explored = []
 
+        // path from agent position to food position sent by algorithm
+        this.path = []
+
+        // variable used to animate agent
+        this.frameCounter = 0;
+        // variable to control which tile the animation is currently in
+        this.pathIndex = 0
 
     }
 
@@ -93,10 +106,14 @@ class World{
     }
 
     draw(){
-        this.drawGrid()
-        this.drawTiles()
-        this.drawFoodAndAgent()
-        this.drawFrontierAndExplored()
+        this.drawGrid() // draws vertical an horizontal lines
+        this.drawTiles() // draw tiles
+        this.drawFoodAndAgent() // draw food and agent
+        this.drawFrontierAndExplored() // draws frontier and explored tiles only when algorithm is running
+        this.drawPath() // draws path from agentPosition to foodPosition only when the algorithm found a successful route
+        if(this.path.length > 0){
+            this.runPathAnimation()
+        }
     }
 
     drawGrid(){
@@ -157,6 +174,53 @@ class World{
     resetAlgorithmArrays(){
         this.frontier = []
         this.explored = []
+    }
+
+    // draws the path based on path array
+    drawPath(){
+        for(let i=0;i<this.path.length-1;i++){
+            strokeWeight(5)
+            stroke(0,200,0)
+            line(this.path[i].x*this.gridSize+this.gridSize/2, this.path[i].y*this.gridSize+this.gridSize/2,this.path[i+1].x*this.gridSize+this.gridSize/2, this.path[i+1].y*this.gridSize+this.gridSize/2)
+        }
+    }
+
+    // animates the agent path
+    runPathAnimation(){
+        if(this.agentPosition.equals(this.foodPosition)){
+            return
+        }
+
+        let currTileDelay = 0
+        if(this.tiles[this.agentPosition.x][this.agentPosition.y] == SAND){
+            currTileDelay = SAND_TIME_FRAMES
+        }
+        if(this.tiles[this.agentPosition.x][this.agentPosition.y] == MUD){
+            currTileDelay = MUD_TIME_FRAMES
+        }
+        if(this.tiles[this.agentPosition.x][this.agentPosition.y] == WATER){
+            currTileDelay = WATER_TIME_FRAMES
+        }
+        if(this.frameCounter >= currTileDelay){
+            this.pathIndex++;
+            this.agentPosition = createVector(this.path[this.pathIndex].x, this.path[this.pathIndex].y)
+            this.frameCounter = 0
+        }
+        this.frameCounter++
+    }
+
+    // whenever the agent finishes its animation, this function is called to create a new random food position and reset a few variables
+    resetWorldStateToNewFoodPosition(){
+        this.resetAlgorithmArrays()
+        this.path = []
+        this.pathIndex = 0
+        this.frameCounter = 0
+        while(true){
+            this.foodPosition = createVector(floor(random(0,this.nX)), floor(random(0,this.nY)))
+            if(this.tiles[this.foodPosition.x][this.foodPosition.y] != OBSTACLE && !this.foodPosition.equals(this.agentPosition)){
+                break
+            }
+        }
     }
 
 
