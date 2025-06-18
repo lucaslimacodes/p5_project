@@ -95,6 +95,12 @@ class Algorithm {
         this.cameFrom.clear()
     }
 
+    // transform the frontier object into a array to be inserted into world object
+    // has to be overriden by inherited classes
+    getFrontierArray(){
+        return
+    }
+
 
 
 

@@ -10,7 +10,7 @@ const GRID_SIZE = 40
 function runAlgorithm(){
   if(currAlgorithm.status == INPROGRESS){ // algorithm is trying to find the food while updates the frontier and explored variables to world object 
    currAlgorithm.runStep()
-    world.frontier = currAlgorithm.frontier // update frontier array
+    world.frontier = currAlgorithm.getFrontierArray()// update frontier array
     world.explored = currAlgorithm.explored // update explored array
   }
   else if(currAlgorithm.status == FAILURE){ // algorithm could not find food, resets world and algorithm
