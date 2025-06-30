@@ -1,8 +1,8 @@
 
 let world
 let currAlgorithm
-const WIDTH = 1440
-const HEIGHT = 720
+let WIDTH
+let HEIGHT
 const GRID_SIZE = 40
 
 // runs currAlgorithm based on world
@@ -28,9 +28,44 @@ function runAlgorithm(){
 }
 
 function setup() {
-  createCanvas(WIDTH, HEIGHT);
+  const nx = document.getElementById("x")
+  WIDTH = nx.value*GRID_SIZE
+  const ny = document.getElementById("y")
+  HEIGHT = ny.value*GRID_SIZE
+  let canva = createCanvas(WIDTH, HEIGHT);
   world = new World(WIDTH,HEIGHT,GRID_SIZE)
-  currAlgorithm = new BFS(world.tiles, world.agentPosition, world.foodPosition) // when creating a new algorithm, instantiate it here
+  const combo = document.getElementById("combo");
+
+  if(combo.value == "BFS") currAlgorithm = new BFS(world.tiles, world.agentPosition, world.foodPosition)
+  if(combo.value == "Dijkstra") currAlgorithm = new Dijkstra(world.tiles, world.agentPosition, world.foodPosition)
+  // add your algorithms here
+
+  combo.addEventListener("change", () => {
+    world = new World(WIDTH,HEIGHT,GRID_SIZE)
+    let selected = combo.value;
+    if (selected === "BFS") currAlgorithm = new BFS(world.tiles, world.agentPosition, world.foodPosition)
+    if (selected === "Dijkstra") currAlgorithm = new Dijkstra(world.tiles, world.agentPosition, world.foodPosition)
+    // add your algorithms here as well
+  });
+
+  nx.addEventListener("change", () => {
+    WIDTH = nx.value*GRID_SIZE
+    canva.remove()
+    canva = createCanvas(WIDTH, HEIGHT);
+    world = new World(WIDTH,HEIGHT,GRID_SIZE)
+    currAlgorithm.reset(world.agentPosition, world.foodPosition, world.tiles)
+  })
+
+  ny.addEventListener("change", () => {
+    HEIGHT = ny.value*GRID_SIZE
+    canva.remove()
+    canva = createCanvas(WIDTH, HEIGHT);
+    world = new World(WIDTH,HEIGHT,GRID_SIZE)
+    currAlgorithm.reset(world.agentPosition, world.foodPosition, world.tiles)
+  })
+
+
+
 }
 
 
