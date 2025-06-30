@@ -160,12 +160,12 @@ class World{
 
     drawFrontierAndExplored(){
         for(let i=0;i<this.explored.length;i++){
-            fill(255,0,0,200)
+            fill(255,0,0,125)
             noStroke()
             square(this.explored[i].x*GRID_SIZE, this.explored[i].y*GRID_SIZE, GRID_SIZE)
         }
         for(let i=0;i<this.frontier.length;i++){
-            fill(0,255,0,200)
+            fill(0,255,0,125)
             noStroke()
             square(this.frontier[i].x*GRID_SIZE, this.frontier[i].y*GRID_SIZE, GRID_SIZE)
         }
