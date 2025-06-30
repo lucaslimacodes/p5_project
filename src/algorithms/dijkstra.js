@@ -45,7 +45,7 @@ class Dijkstra extends Algorithm{
     }
 
     findIndexInFrontier(position){
-        return this.frontier.heap.findIndex(i => i.value == position)
+        return this.frontier.heap.findIndex(i => i.value.equals(position))
     }
 
     isPositionInFrontier(position){

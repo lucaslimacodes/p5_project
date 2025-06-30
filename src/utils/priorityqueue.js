@@ -5,7 +5,7 @@ class PriorityQueue {
 
   // Insere um valor com prioridade (se o valor já existir, muda a prioridade e faz um bubble up de novo)
   enqueue(value, priority) {
-    let valueIndex = this.heap.findIndex(i => i.value == value)
+    let valueIndex = this.heap.findIndex(i => i.value.equals(value))
     if(valueIndex == -1){
       this.heap.push({ value, priority });
     }else{
