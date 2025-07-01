@@ -59,7 +59,7 @@ function setup() {
     if(combo.value == "DFS") currAlgorithm = new DFS(world.tiles, world.agentPosition, world.foodPosition)
     if (selected === "Dijkstra") currAlgorithm = new Dijkstra(world.tiles, world.agentPosition, world.foodPosition)
     if (selected === "A*") currAlgorithm = new Astar(world.tiles, world.agentPosition, world.foodPosition) 
-    if (selected === "Greedy") currAlgorithm = new Astar(world.tiles, world.agentPosition, world.foodPosition) 
+    if (selected === "Greedy") currAlgorithm = new Greedy(world.tiles, world.agentPosition, world.foodPosition) 
     
     
     // add your algorithms here as well
