@@ -29,6 +29,9 @@ function runAlgorithm(){
       }
     }
   }
+  if(stopped) {
+    world.path = [] // zera path se parar
+  }
 }
 
 function setup() {
