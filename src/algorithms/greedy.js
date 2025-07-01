@@ -1,57 +1,55 @@
-class Greedy extends Algorithm {
+class Greedy extends Algorithm{
     constructor(grid, startPosition, endPosition){
         super(grid,startPosition,endPosition)
-        this.frontier = [startPosition] // queue that stores p5.vectors
+        this.frontier = new PriorityQueue() // queue that stores p5.vectors
+        this.frontier.enqueue(startPosition, this.heuristic(startPosition))
     }
-
-
+    
     runStep(){
         // check if algorithm has finished
+        //console.log(this.frontier.heap.length)
         if(this.status == SUCCESS || this.status == FAILURE){
             return 
         }
         // if the frontier is empty, the search failed
-        if(this.frontier.length == 0){
-            this.status = FAILURE   
+        if(this.frontier.isEmpty()){
+            this.status = FAILURE
             return
         }
-        
-        let cheapestBlock = null
-        let cheapestBlockIndex = null
-        let cheapestBlockCost = Infinity
+        let state = this.frontier.dequeue()
+        let exploredValue = state.value
+        this.explored.push(exploredValue)
 
-        for(let i = 0; i<this.frontier.length; i++) {
-            if(cheapestBlockCost > this.grid[this.frontier[i].x][this.frontier[i].y]) {
-                cheapestBlock = this.frontier[i]
-                cheapestBlockIndex = i
-                cheapestBlockCost = this.grid[this.frontier[i].x][this.frontier[i].y]
-            }
-        }
-
-        let state = cheapestBlock
-
-        this.frontier.splice(cheapestBlockIndex, 1)
-        this.explored.push(state)
-
-        if(state.equals(this.endPosition)){
+        if(exploredValue.equals(this.endPosition)){
             this.status = SUCCESS
             return
         }
 
-        let neighbors = this.getNeighbors(state)
-
+        let neighbors = this.getNeighbors(exploredValue)
+        
         for(let i=0;i<neighbors.length;i++){
-            if(this.isPositionInFrontier(neighbors[i]) == false && this.wasPositionExplored(neighbors[i]) == false){
-                this.frontier.push(neighbors[i])
-                this.cameFrom[neighbors[i]] = state
+            let newPriority = 0
+            if(this.wasPositionExplored(neighbors[i]) == false){
+                newPriority = this.heuristic(neighbors[i])
+                this.frontier.enqueue(neighbors[i],newPriority)
+                this.cameFrom[neighbors[i]] = exploredValue
             }
         }
+
     }
 
+    heuristic(state){
+        let mult = 1;
+        return (Math.abs(state.x - this.endPosition.x) + Math.abs(state.y - this.endPosition.y)) * mult; 
+    }
+
+    findIndexInFrontier(position){
+        return this.frontier.heap.findIndex(i => i.value.equals(position))
+    }
 
     isPositionInFrontier(position){
-        for(let i=0;i<this.frontier.length;i++){
-            if(this.frontier[i].equals(position)){
+        for(let i=0;i<this.frontier.heap.length;i++){
+            if(this.frontier.heap[i].value.equals(position)){
                 return true
             }
         }
@@ -60,11 +58,13 @@ class Greedy extends Algorithm {
 
     reset(startPosition, endPosition, grid){
         super.reset(startPosition, endPosition, grid)
-        this.frontier = [this.startPosition] 
+        this.frontier = new PriorityQueue() // queue that stores p5.vectors
+        this.frontier.enqueue(startPosition, this.heuristic(startPosition))
     }
     
     getFrontierArray(){
-        return this.frontier
+        let currFrontierArray = this.frontier.heap.map(i => i.value)
+        return currFrontierArray
     }
 
 
