@@ -37,6 +37,7 @@ function setup() {
   const combo = document.getElementById("combo");
 
   if(combo.value == "BFS") currAlgorithm = new BFS(world.tiles, world.agentPosition, world.foodPosition)
+  if(combo.value == "DFS") currAlgorithm = new DFS(world.tiles, world.agentPosition, world.foodPosition)
   if(combo.value == "Dijkstra") currAlgorithm = new Dijkstra(world.tiles, world.agentPosition, world.foodPosition)
   if(combo.value == "A*")currAlgorithm = new Astar(world.tiles, world.agentPosition, world.foodPosition)
   // add your algorithms here
@@ -45,6 +46,7 @@ function setup() {
     world = new World(WIDTH,HEIGHT,GRID_SIZE)
     let selected = combo.value;
     if (selected === "BFS") currAlgorithm = new BFS(world.tiles, world.agentPosition, world.foodPosition)
+    if(combo.value == "DFS") currAlgorithm = new DFS(world.tiles, world.agentPosition, world.foodPosition)
     if (selected === "Dijkstra") currAlgorithm = new Dijkstra(world.tiles, world.agentPosition, world.foodPosition)
     if (selected === "A*") currAlgorithm = new Astar(world.tiles, world.agentPosition, world.foodPosition) 
     
