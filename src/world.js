@@ -4,13 +4,13 @@
 // tile weights/enumerators
 const OBSTACLE = Infinity
 const SAND = 1
-const MUD = 5
-const WATER = 10
+const MUD = 3
+const WATER = 5
 
 // tiles probability to exist
-const OBST_PROB = 0.25
-const SAND_PROB = 0.25
-const MUD_PROB = 0.25
+const OBST_PROB = 0.15
+const SAND_PROB = 0.3
+const MUD_PROB = 0.3
 const WATER_PROB = 0.25
 
 // agent and food enumerators
