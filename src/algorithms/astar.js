@@ -56,7 +56,7 @@ class Astar extends Algorithm{
     }
 
     isPositionInFrontier(position){
-        for(let i=0;i<this.frontier.length;i++){
+        for(let i=0;i<this.frontier.heap.length;i++){
             if(this.frontier.heap[i].value.equals(position)){
                 return true
             }
